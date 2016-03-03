@@ -53,9 +53,11 @@ clean_dir()
 
     for SUBDIR in $SUBDIRS ; do
         if [ -d $SUBDIR ] ; then 
-            pushd $SUBDIR > /dev/null
-            clean_dir
-            popd > /dev/null
+            #echo "DEBUG ($PWD) \$SUBDIR = $SUBDIR"
+            if pushd $SUBDIR > /dev/null ; then 
+                clean_dir
+                popd > /dev/null
+            fi
         fi
     done
 }
