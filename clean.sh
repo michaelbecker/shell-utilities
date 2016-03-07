@@ -5,7 +5,7 @@
 #
 #   MIT License
 # 
-#   Copyright (c) 2015, Michael Becker (michael.f.becker@gmail.com)
+#   Copyright (c) 2016, Michael Becker (michael.f.becker@gmail.com)
 #   
 #   Permission is hereby granted, free of charge, to any person obtaining a 
 #   copy of this software and associated documentation files (the "Software"),
@@ -28,6 +28,8 @@
 #############################################################################
 
 let COUNT=0
+START_DIR=$PWD
+
 
 clean_temp_files_in_pwd()
 {
@@ -63,14 +65,32 @@ clean_dir()
 }
 
 
-clean_dir .
+display_results()
+{
+    if [ $COUNT -gt 1 ] ; then 
+        echo "$COUNT backup files were deleted"
+    elif [ $COUNT -gt 0 ] ; then 
+        echo "$COUNT backup file was deleted"
+    else
+        echo "No backup files found"
+    fi
+}
 
-if [ $COUNT -gt 1 ] ; then 
-    echo "$COUNT backup files were deleted"
-elif [ $COUNT -gt 0 ] ; then 
-    echo "$COUNT backup file was deleted"
-else
-    echo "No backup files found"
-fi
+
+clean_up_on_signal() 
+{
+    cd $START_DIR
+    echo 
+    echo "Exiting script early"
+    display_results
+    exit 
+}
+
+
+trap clean_up_on_signal SIGHUP SIGINT SIGTERM
+
+
+clean_dir .
+display_results
 
 
