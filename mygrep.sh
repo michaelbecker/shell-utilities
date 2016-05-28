@@ -34,6 +34,6 @@ if [ -z $TMP_STR ] ; then
     exit 1
 fi
 
-grep --color=always -n -r $TMP_STR * | grep -v *~ | grep -v "Binary file"
+grep --color=always -n -r $TMP_STR * | grep -v "*~" | grep -v "Binary file"
 
 
