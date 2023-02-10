@@ -33,6 +33,7 @@ int main (int argc, char *argv[])
         return -1;
     }
 
+    printf("/* Big endian. Signature => %s*/\n", signature);
     printf("#define %s 0x", argv[1]);
 
     for (i = 0; i < length; i++)
@@ -40,6 +41,18 @@ int main (int argc, char *argv[])
 
     for ( ; i < 4; i++)
         printf("%02X", 0);
+
+    printf("\n\n");
+
+
+    printf("/* Little endian. Signature => %s*/\n", signature);
+    printf("#define %s 0x", argv[1]);
+
+    for (i = length; i < 4; i++)
+        printf("%02X", 0);
+
+    for (i = length; i > 0; i--)
+        printf("%02X", signature[i-1]);
 
     printf("\n");
 
