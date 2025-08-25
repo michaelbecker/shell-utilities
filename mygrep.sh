@@ -5,7 +5,7 @@
 #
 #   MIT License
 # 
-#   Copyright (c) 2015, Michael Becker (michael.f.becker@gmail.com)
+#   Copyright (c) 2025, Michael Becker (michael.f.becker@gmail.com)
 #   
 #   Permission is hereby granted, free of charge, to any person obtaining a 
 #   copy of this software and associated documentation files (the "Software"),
@@ -28,12 +28,17 @@
 #############################################################################
 
 TMP_STR=$1
+IGNORE_CASE=$2
 
 if [ -z $TMP_STR ] ; then 
     echo "What do I grep for?"
     exit 1
 fi
 
-grep --color=always -n -r $TMP_STR * | grep -v "*~" | grep -v "Binary file"
+if [ -z $IGNORE_CASE ]; then
+    grep --color=always -n -r $TMP_STR * | grep -v "*~" | grep -v "Binary file"
+else
+    grep $IGNORE_CASE --color=always -n -r $TMP_STR * | grep -v "*~" | grep -v "Binary file"
+fi
 
 
